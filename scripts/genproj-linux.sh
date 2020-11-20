@@ -1,0 +1,1 @@
+./vendor/Linux-bin/premake/premake5 $1
