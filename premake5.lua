@@ -12,10 +12,5 @@ vendordir = "OpenBit/vendor"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = { }
 
-group "Dependencies"
-	include (vendordir)
-
-group ""
-
 include "OpenBit"
 include "Sandbox"
