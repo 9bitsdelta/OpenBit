@@ -5,7 +5,7 @@ configurations { "Debug", "Release" }
 
 architecture "x64"
 
-outputdir = "%{cfg.buildcfg}"
+outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
 vendordir = "OpenBit/vendor"
 

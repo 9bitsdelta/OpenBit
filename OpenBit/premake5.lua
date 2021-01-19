@@ -5,7 +5,7 @@ project "OpenBit"
 	staticruntime "on"
 	
 	targetdir ("%{wks.location}/bin/" .. outputdir)
-	objdir ("%{wks.location}/bin-int/" .. outputdir)
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "bitpch.h"
 	pchsource "source/bitpch.cpp"

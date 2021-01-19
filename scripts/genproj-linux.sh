@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./vendor/Linux-bin/premake/premake5 $1
+./vendor/Linux-bin/premake/premake5 gmake2
