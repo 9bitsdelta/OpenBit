@@ -7,10 +7,12 @@ architecture "x64"
 
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
-vendordir = "OpenBit/vendor"
+vendor = "%{wks.location}/OpenBit/vendor"
 
 -- Include directories relative to root folder (solution directory)
-IncludeDir = { }
+Includes = { }
+Includes["spdlog"] = vendor .. "/spdlog/include"
+Includes["glm"]    = vendor .. "/glm"
 
 include "OpenBit"
 include "Sandbox"

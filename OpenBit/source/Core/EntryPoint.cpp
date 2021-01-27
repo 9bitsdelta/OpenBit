@@ -12,7 +12,6 @@ int BitMain(int argc, char** argv)
 
     auto app = Bit::CreateApp();
 
-
     while (app->IsRunning())
     {
         app->OnRun();

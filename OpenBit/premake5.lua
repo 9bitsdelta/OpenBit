@@ -19,7 +19,8 @@ project "OpenBit"
 	includedirs
 	{
 		"include",
-		"vendor/spdlog/include"
+		"%{Includes.spdlog}",
+		"%{Includes.glm}"
 	}
 	
 	defines
@@ -51,10 +52,12 @@ project "OpenBit"
 		
 		links
 		{
+			"GLEW",
 			"GL",
 			"X11",
 			"pthread",
-			"dl"
+			"dl",
+			"SDL2"
 		}
 		
 	filter "configurations:Debug*"

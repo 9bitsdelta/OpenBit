@@ -1,16 +1,16 @@
 #pragma once
 
-/*
-* General purpose utilities
-*/
+// General purpose utilities
 
 #include <iostream>
 #include <fstream>
 
-/*
-* Data types
-*/
+// Data types
 
 #include <memory>
 #include <vector>
 #include <string>
+
+// OpenBit
+
+#include "Core/Base.h"

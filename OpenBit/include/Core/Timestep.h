@@ -12,8 +12,8 @@ namespace Bit {
 
 		operator float() const { return m_Time; }
 
-		float GetSeconds() const { return m_Time; }
-		float GetMilliseconds() const { return m_Time * 1000.0f; }
+		float GetSeconds() const { return m_Time * 0.001f; }
+		float GetMilliseconds() const { return m_Time; }
 	private:
 		float m_Time;
 	};

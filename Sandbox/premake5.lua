@@ -15,7 +15,8 @@ project "Sandbox"
 	includedirs
 	{
 		"%{wks.location}/OpenBit/include",
-		"%{wks.location}/OpenBit/vendor/spdlog/include"
+		"%{Includes.spdlog}",
+		"%{Includes.glm}"
 	}
 	
 	links
@@ -42,9 +43,12 @@ project "Sandbox"
 	
 		links
 		{
+			"GL",
+			"GLEW",
 			"X11",
 			"pthread",
-			"dl"
+			"dl",
+			"SDL2"
 		}
 
 	filter "configurations:Debug*"
