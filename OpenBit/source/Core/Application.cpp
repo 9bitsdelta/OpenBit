@@ -1,6 +1,10 @@
 #include "bitpch.h"
 
 #include "Core/Application.h"
+#include "Graphics/GraphicsAPI.h"
+
+#include <GLFW/glfw3.h>
+#include <GL/glew.h>
 
 namespace Bit {
 
@@ -11,37 +15,25 @@ namespace Bit {
         BIT_CORE_ASSERT(!s_Instance, "Application already running!");
         s_Instance = this;
 
-        SDL_Init(SDL_INIT_VIDEO);
+        BIT_CORE_ASSERT(glfwInit(), "GLFW did not init!");
 
-        auto windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
-
-        m_Window = SDL_CreateWindow("OpenBit", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, windowFlags);
+        m_Window = Window::Create();
+        m_Window->SetEventCallback(BIT_BIND_EVENT_FN(Application::EventHandling));
 
         BIT_CORE_ASSERT(m_Window, "Window could not be created!");
 
-        m_Context = SDL_GL_CreateContext(m_Window);
-
         BIT_CORE_ASSERT( (glewInit() == GLEW_OK) , "GLEW could not init!" );
-
-        SDL_GL_SetSwapInterval(1);
-
     }
 
     Application::~Application()
     {
-        SDL_GL_DeleteContext(m_Context);
-        SDL_DestroyWindow(m_Window);
-        SDL_Quit();
     }
 
     void Application::OnRun()
     {
-        float time = SDL_GetTicks();
+        float time = glfwGetTime();
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
-
-        SDL_Event event;
-        OnEvent(&event);
 
         OnUpdate(timestep);
 
@@ -50,29 +42,32 @@ namespace Bit {
 
         OnRender();
 
-        SDL_GL_SwapWindow(m_Window);
+        m_Window->OnUpdate();
+        //if(glfwWindowShouldClose(m_Window)) m_Running=false;
     }
 
-    void Application::OnEvent(SDL_Event *event)
-    {
-        while(SDL_PollEvent(event)!=0)
-        {
-            switch(event->type)
-            {
-                case SDL_QUIT: OnWindowClose();
-            }
-        }
-    }
-
-    bool Application::OnWindowClose()
+    bool Application::OnWindowClose(WindowCloseEvent& event)
     {
         m_Running = false;
         return true;
     }
 
-    bool Application::OnWindowResize()
+    bool Application::OnWindowResize(WindowResizeEvent& event)
     {
+        //BIT_CORE_ERROR("OnWindowResize did stuff");
+        GraphicsAPI::SetViewport(0, 0, event.GetWidth(), event.GetHeight());
+        
         return true;
+    }
+
+    void Application::EventHandling(Event& event)
+    {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowCloseEvent>(BIT_BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIT_BIND_EVENT_FN(Application::OnWindowResize));
+
+        OnEvent(event);
+
     }
 
 }

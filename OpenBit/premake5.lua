@@ -26,6 +26,7 @@ project "OpenBit"
 	defines
 	{
 		"_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
 	}
 
 	filter "system:windows"
@@ -52,12 +53,12 @@ project "OpenBit"
 		
 		links
 		{
-			"GLEW",
-			"GL",
 			"X11",
 			"pthread",
 			"dl",
-			"SDL2"
+			"GL",
+			"GLEW",
+			"glfw"
 		}
 		
 	filter "configurations:Debug*"

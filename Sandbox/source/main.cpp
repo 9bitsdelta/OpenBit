@@ -10,9 +10,10 @@ public:
         m_VAO = Bit::CreateRef<Bit::VertexArray>();
 
         float vert[] = {
-            0.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            1.0f, 1.0f, 0.0f
+            -0.5f, -0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f
         };
 
         Bit::Ref<Bit::VertexBuffer> vertexBuffer = Bit::CreateRef<Bit::VertexBuffer>(vert, sizeof(vert));
@@ -23,7 +24,7 @@ public:
         vertexBuffer->SetLayout(layout);
         m_VAO->SetVertexBuffer(vertexBuffer);
 
-        uint32_t indices[3] = { 0, 1, 2 };
+        uint32_t indices[] = { 0, 1, 2, 2, 3, 0 };
         Bit::Ref<Bit::IndexBuffer> indexBuffer = Bit::CreateRef<Bit::IndexBuffer>(indices, sizeof(indices) / sizeof(uint32_t));
         m_VAO->SetIndexBuffer(indexBuffer);
 
@@ -94,8 +95,8 @@ public:
 
     void OnUpdate(Bit::Timestep& ts)
     {
-        BIT_TRACE("Timestep in ms: {}", ts.GetMilliseconds() );
-        BIT_TRACE("Timestep in fps: {}", 1000.0f / ts.GetMilliseconds());
+        //BIT_TRACE("Timestep in ms: {}", ts.GetMilliseconds() );
+        //BIT_TRACE("Timestep in fps: {}", 1000.0f / ts.GetMilliseconds());
     }
 
     void OnRender()

@@ -7,21 +7,22 @@ project "Sandbox"
 	targetdir ("%{wks.location}/bin/" .. outputdir)
 	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}/")
 	
-	files
-	{
+	files {
 		"source/**"
 	}
 	
-	includedirs
-	{
+	includedirs {
 		"%{wks.location}/OpenBit/include",
 		"%{Includes.spdlog}",
 		"%{Includes.glm}"
 	}
 	
-	links
-	{
+	links {
 		"OpenBit"
+	}
+
+	defines {
+		"GLFW_INCLUDE_NONE"
 	}
 	
 	filter "system:windows"
@@ -43,12 +44,12 @@ project "Sandbox"
 	
 		links
 		{
-			"GL",
-			"GLEW",
 			"X11",
 			"pthread",
 			"dl",
-			"SDL2"
+			"GL",
+			"GLEW",
+			"glfw"
 		}
 
 	filter "configurations:Debug*"

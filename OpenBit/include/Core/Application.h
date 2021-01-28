@@ -1,9 +1,8 @@
 #pragma once
 
+#include "Core/Window.h"
 #include "Core/Timestep.h"
-
-#include <SDL2/SDL.h>
-#include <GL/glew.h>
+#include "Core/Event.h"
 
 int BitMain(int argc, char** argv);
 
@@ -16,24 +15,23 @@ namespace Bit {
         Application();
         virtual ~Application();
 
+        virtual void OnEvent(Event& event) {}
+        virtual void OnUpdate(Timestep& ts) {}
+        virtual void OnRender() {}
+
     private:
         void OnRun();
         bool IsRunning() { return m_Running; }
         
-        void OnEvent(SDL_Event* ev);
-        
-        virtual void OnUpdate(Timestep& ts) = 0;
-        
-        virtual void OnRender() {}
+        void EventHandling(Event& event);
 
-        bool OnWindowClose();
-        bool OnWindowResize();
-        
+        bool OnWindowClose(WindowCloseEvent& event);
+        bool OnWindowResize(WindowResizeEvent& event);
+
     private:
         bool m_Running = true;
         Timestep m_LastFrameTime = 0;
-        SDL_Window* m_Window;
-        SDL_GLContext m_Context;
+        Scope<Window> m_Window;
 
     private:
         static Application* s_Instance;
