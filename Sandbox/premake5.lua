@@ -20,7 +20,9 @@ project "Sandbox"
     }
     
     links {
-        "OpenBit"
+        "OpenBit",
+        "GLAD",
+        "GLFW"
     }
 
     defines {
@@ -32,6 +34,10 @@ project "Sandbox"
 
         defines {
             "BIT_PLATFORM_WINDOWS"
+        }
+
+        links {
+            "opengl32.lib"
         }
 
     filter "system:linux"
@@ -46,9 +52,7 @@ project "Sandbox"
             "X11",
             "pthread",
             "dl",
-            "GL",
-            "GLAD",
-            "GLFW"
+            "GL"
         }
 
     filter "configurations:Debug*"

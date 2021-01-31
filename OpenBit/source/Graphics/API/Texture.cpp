@@ -1,3 +1,4 @@
+#include "bitpch.h"
 #include "Graphics/API/Texture.h"
 #include "Graphics/API/stb_image.h"
 

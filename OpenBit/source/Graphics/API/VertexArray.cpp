@@ -1,3 +1,4 @@
+#include "bitpch.h"
 #include "Graphics/API/VertexArray.h"
 
 namespace Bit {
