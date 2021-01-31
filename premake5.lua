@@ -15,9 +15,10 @@ vendor = "%{wks.location}/OpenBit/vendor"
 
 -- Include directories relative to root folder (solution directory)
 Includes = { }
-Includes["spdlog"] = vendor .. "/spdlog/include"
-Includes["glm"]    = vendor .. "/glm"
+Includes["spdlog"]  = vendor .. "/spdlog/include"
+Includes["glm"]     = vendor .. "/glm"
 Includes["entt"]    = vendor .. "/entt"
+Includes["glew"]    = vendor .. "/glew/include"
 
 include "OpenBit"
 include "Sandbox"

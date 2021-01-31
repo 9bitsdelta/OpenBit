@@ -29,8 +29,7 @@ project "Sandbox"
 	filter "system:windows"
 		systemversion "latest"
 
-		defines
-		{
+		defines {
 			"BIT_PLATFORM_WINDOWS"
 		}
 
@@ -38,18 +37,16 @@ project "Sandbox"
 		systemversion "latest"
 		toolset ("gcc")
 	
-		defines
-		{
+		defines {
 			"BIT_PLATFORM_LINUX"
 		}
 	
-		links
-		{
+		links {
 			"X11",
 			"pthread",
 			"dl",
 			"GL",
-			"GLEW",
+			vendor .. "/glew/lib/linux/libGLEW.a",
 			"glfw"
 		}
 

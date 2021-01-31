@@ -21,7 +21,8 @@ project "OpenBit"
 		"include",
 		"%{Includes.spdlog}",
 		"%{Includes.glm}",
-		"%{Includes.entt}"
+		"%{Includes.entt}",
+		"%{Includes.glew}"
 	}
 	
 	defines
@@ -58,7 +59,7 @@ project "OpenBit"
 			"pthread",
 			"dl",
 			"GL",
-			"GLEW",
+			vendor .. "/glew/lib/linux/libGLEW.a",
 			"glfw"
 		}
 		

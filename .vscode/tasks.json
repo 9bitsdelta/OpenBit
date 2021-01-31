@@ -1,20 +1,32 @@
 {
     "tasks": [
-        
         {
             "label": "Run premake",
             "type": "shell",
             "linux": {
                 "command": "bash",
                 "args": [
-                    "${workspaceFolder}/scripts/genproj-linux.sh",
-                ],
+                    "${workspaceFolder}/scripts/genproj-linux.sh"
+                ]
             },
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": []
         },
-
+        {
+            "label": "Zip dependencies",
+            "type": "shell",
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "${workspaceFolder}/scripts/zipdep.sh"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
         {
             "label": "Make all (debug)",
             "type": "shell",
@@ -26,7 +38,7 @@
                 ],
                 "problemMatcher": [
                     "$gcc"
-                ],
+                ]
             },
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -37,7 +49,6 @@
                 "isDefault": true
             }
         },
-        
         {
             "label": "Make all (release)",
             "type": "shell",
@@ -49,14 +60,13 @@
                 ],
                 "problemMatcher": [
                     "$gcc"
-                ],
+                ]
             },
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "dependsOn": "Run premake",
+            "dependsOn": "Run premake"
         }
-
     ],
     "version": "2.0.0"
 }
