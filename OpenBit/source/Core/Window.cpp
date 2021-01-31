@@ -24,6 +24,11 @@ namespace Bit {
         BIT_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
     }
 
+    Scope<Window> Window::Create(const WindowProps& props)
+    {
+        return CreateScope<Window>(props);
+    }
+
     Window::Window(const WindowProps& props)
     {
         s_Data.Title = props.Title;
@@ -40,10 +45,11 @@ namespace Bit {
         }
 
         {
-        #if defined(HZ_DEBUG)
-            if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
-                glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
+        #if defined(BIT_DEBUG)
+            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
         #endif
+        
             s_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
             ++s_GLFWWindowCount;
         }
@@ -181,14 +187,14 @@ namespace Bit {
         return s_Data.VSync;
     }
 
-    Scope<Window> Window::Create(const WindowProps& props)
-    {
-        return CreateScope<Window>(props);
-    }
-
     void* Window::GetNativeWindow() const
     {
         return s_Window;
+    }
+
+    float Window::GetTime() const
+    {
+        return glfwGetTime();
     }
 
 }

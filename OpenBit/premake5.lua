@@ -20,7 +20,8 @@ project "OpenBit"
 	{
 		"include",
 		"%{Includes.spdlog}",
-		"%{Includes.glm}"
+		"%{Includes.glm}",
+		"%{Includes.entt}"
 	}
 	
 	defines

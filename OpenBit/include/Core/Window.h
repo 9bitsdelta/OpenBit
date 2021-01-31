@@ -34,6 +34,7 @@ namespace Bit {
         void SetVSync(bool enabled);
         void OnUpdate();
 
+        float GetTime() const;
         uint32_t GetWidth() const;
         uint32_t GetHeight() const;
         bool IsVSync() const;

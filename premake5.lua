@@ -5,6 +5,10 @@ configurations { "Debug", "Release" }
 
 architecture "x64"
 
+flags {
+    "MultiProcessorCompile"
+}
+
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
 vendor = "%{wks.location}/OpenBit/vendor"
@@ -13,6 +17,7 @@ vendor = "%{wks.location}/OpenBit/vendor"
 Includes = { }
 Includes["spdlog"] = vendor .. "/spdlog/include"
 Includes["glm"]    = vendor .. "/glm"
+Includes["entt"]    = vendor .. "/entt"
 
 include "OpenBit"
 include "Sandbox"

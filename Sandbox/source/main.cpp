@@ -1,91 +1,25 @@
-#include "Bit.h"
+#include <Bit.h>
 
-#include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Sandbox : public Bit::Application
 {
 public:
     Sandbox()
     {
-        m_VAO = Bit::CreateRef<Bit::VertexArray>();
+        Bit::SimpleRenderer::Init();
 
-        float vert[] = {
-            -0.5f, -0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f
-        };
+        Bit::Ref<Bit::Texture2D> texture = Bit::CreateRef<Bit::Texture2D>("assets/textures/mountain.bmp");
 
-        Bit::Ref<Bit::VertexBuffer> vertexBuffer = Bit::CreateRef<Bit::VertexBuffer>(vert, sizeof(vert));
+        Bit::Entity mountain = m_Scene.CreateEntity("Mountain");
+        auto& transform = mountain.GetComponent<Bit::TransformComponent>();
+        transform.Position = { -200.0f, -150.0f, 0.0f };
+        transform.Scale = { 400.0f, 300.0f, 1.0f };
+        mountain.AddComponent<Bit::SpriteRendererComponent>(texture);
 
-        Bit::BufferLayout layout = {
-            { Bit::ShaderDataType::Float3, "a_Position" },
-        };
-        vertexBuffer->SetLayout(layout);
-        m_VAO->SetVertexBuffer(vertexBuffer);
-
-        uint32_t indices[] = { 0, 1, 2, 2, 3, 0 };
-        Bit::Ref<Bit::IndexBuffer> indexBuffer = Bit::CreateRef<Bit::IndexBuffer>(indices, sizeof(indices) / sizeof(uint32_t));
-        m_VAO->SetIndexBuffer(indexBuffer);
-
-        std::string vertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Position;
-
-            void main()
-            {
-                gl_Position = vec4(a_Position, 1.0);	
-            }
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            void main()
-            {
-                color = vec4(1.0, 1.0, 1.0, 1.0);
-            }
-        )";
-
-        m_Shader = Bit::CreateRef<Bit::Shader>("VertexPosColor", vertexSrc, fragmentSrc);
-
-        std::string flatColorShaderVertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Position;
-
-            uniform mat4 u_ViewProjection;
-            uniform mat4 u_Transform;
-
-            out vec3 v_Position;
-
-            void main()
-            {
-                v_Position = a_Position;
-                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-            }
-        )";
-
-        std::string flatColorShaderFragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 v_Position;
-
-            uniform vec3 u_Color;
-
-            void main()
-            {
-                color = vec4(u_Color, 1.0);
-            }
-        )";
-
-        m_FlatColorShader = Bit::CreateRef<Bit::Shader>("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
-
+        m_Projection = glm::ortho(-400.0f, 400.0f, -300.0f, 300.0f);
+        m_View = glm::mat4(1.0f);
     }
 
     ~Sandbox()
@@ -95,21 +29,65 @@ public:
 
     void OnUpdate(Bit::Timestep& ts)
     {
-        //BIT_TRACE("Timestep in ms: {}", ts.GetMilliseconds() );
-        //BIT_TRACE("Timestep in fps: {}", 1000.0f / ts.GetMilliseconds());
+        m_Ts = ts;
+        m_ViewProjection = m_Projection * m_View;
     }
 
     void OnRender()
     {
-        m_VAO->Bind();
-        m_Shader->Bind();
-        Bit::GraphicsAPI::DrawIndexed(m_VAO);
+        m_Scene.OnRender(m_ViewProjection);
+    }
+
+    void OnEvent(Bit::Event& event)
+    {
+        //Other Events
+
+        //Sandbox events
+        Bit::EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<Bit::WindowResizeEvent>(BIT_BIND_EVENT_FN(Sandbox::OnWindowResize));
+        dispatcher.Dispatch<Bit::KeyPressedEvent>(BIT_BIND_EVENT_FN(Sandbox::OnKeyPressed));
+    }
+
+    bool OnWindowResize(Bit::WindowResizeEvent& event)
+    {
+        m_Projection = glm::ortho(event.GetWidth()*-0.5f, event.GetWidth()*0.5f, (float)event.GetHeight()*(-0.5f), (float)event.GetHeight()*0.5f );
+        return true;
+    }
+
+    bool OnKeyPressed(Bit::KeyPressedEvent& event)
+    {
+
+        glm::vec3 translation = { 0.0f, 0.0f, 0.0f };
+
+        switch(event.GetKeyCode())
+        {
+        case Bit::Key::W:
+            translation.y += 100.0f * m_Ts;
+            break;
+        case Bit::Key::S:
+            translation.y -= 100.0f * m_Ts;
+            break;
+        case Bit::Key::A:
+            translation.x += 100.0f * m_Ts;
+            break;
+        case Bit::Key::D:
+            translation.x -= 100.0f * m_Ts;
+            break;
+        };
+
+        m_View = glm::translate(m_View, translation);
+
+        return true;
     }
 
 private:
-    Bit::Ref<Bit::VertexArray> m_VAO;
-    Bit::Ref<Bit::Shader> m_Shader;
-    Bit::Ref<Bit::Shader> m_FlatColorShader;
+
+    Bit::Timestep m_Ts;
+    Bit::Scene m_Scene;
+    glm::mat4 m_ViewProjection;
+    glm::mat4 m_Projection;
+    glm::mat4 m_View;
+
 };
 
 Bit::Application* Bit::CreateApp()

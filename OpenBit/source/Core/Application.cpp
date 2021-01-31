@@ -1,10 +1,7 @@
 #include "bitpch.h"
 
 #include "Core/Application.h"
-#include "Graphics/GraphicsAPI.h"
-
-#include <GLFW/glfw3.h>
-#include <GL/glew.h>
+#include "Graphics/API/GraphicsAPI.h"
 
 namespace Bit {
 
@@ -15,14 +12,12 @@ namespace Bit {
         BIT_CORE_ASSERT(!s_Instance, "Application already running!");
         s_Instance = this;
 
-        BIT_CORE_ASSERT(glfwInit(), "GLFW did not init!");
-
         m_Window = Window::Create();
         m_Window->SetEventCallback(BIT_BIND_EVENT_FN(Application::EventHandling));
 
         BIT_CORE_ASSERT(m_Window, "Window could not be created!");
 
-        BIT_CORE_ASSERT( (glewInit() == GLEW_OK) , "GLEW could not init!" );
+        GraphicsAPI::Init();
     }
 
     Application::~Application()
@@ -31,19 +26,18 @@ namespace Bit {
 
     void Application::OnRun()
     {
-        float time = glfwGetTime();
+        float time = m_Window->GetTime();
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
 
         OnUpdate(timestep);
 
-        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        GraphicsAPI::SetClearColor( {0.1f, 0.1f, 0.1f, 1.0f} );
+        GraphicsAPI::Clear();
 
         OnRender();
 
         m_Window->OnUpdate();
-        //if(glfwWindowShouldClose(m_Window)) m_Running=false;
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& event)
@@ -54,7 +48,6 @@ namespace Bit {
 
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
-        //BIT_CORE_ERROR("OnWindowResize did stuff");
         GraphicsAPI::SetViewport(0, 0, event.GetWidth(), event.GetHeight());
         
         return true;
@@ -67,7 +60,6 @@ namespace Bit {
         dispatcher.Dispatch<WindowResizeEvent>(BIT_BIND_EVENT_FN(Application::OnWindowResize));
 
         OnEvent(event);
-
     }
 
 }

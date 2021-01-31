@@ -6,8 +6,7 @@
     #if defined(BIT_PLATFORM_WINDOWS)
         #define BIT_DEBUGBREAK() __debugbreak()
     #elif defined(BIT_PLATFORM_LINUX)
-        #include <signal.h>
-        #define BIT_DEBUGBREAK() raise(SIGTRAP)
+        #define BIT_DEBUGBREAK() __builtin_trap()
     #else
         #error "Platform doesn't support debugbreak yet!"
     #endif
