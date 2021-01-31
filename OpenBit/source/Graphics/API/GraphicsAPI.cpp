@@ -1,6 +1,6 @@
 #include "Graphics/API/GraphicsAPI.h"
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 #include "Core/Log.h"
 
@@ -21,7 +21,7 @@ namespace Bit {
 
     void GraphicsAPI::Init()
     {
-    BIT_CORE_ASSERT( (glewInit() == GLEW_OK) , "GLEW could not init!" );
+    BIT_CORE_ASSERT( gladLoadGL() , "GLAD could not init!" );
 
     #ifdef BIT_DEBUG
         glEnable(GL_DEBUG_OUTPUT);

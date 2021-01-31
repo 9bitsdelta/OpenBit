@@ -24,7 +24,7 @@ public:
 
     ~Sandbox()
     {
-
+        Bit::SimpleRenderer::Shutdown();
     }
 
     void OnUpdate(Bit::Timestep& ts)

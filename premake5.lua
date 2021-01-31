@@ -18,7 +18,14 @@ Includes = { }
 Includes["spdlog"]  = vendor .. "/spdlog/include"
 Includes["glm"]     = vendor .. "/glm"
 Includes["entt"]    = vendor .. "/entt"
-Includes["glew"]    = vendor .. "/glew/include"
+Includes["glad"]    = vendor .. "/GLAD/include"
+Includes["glfw"]    = vendor .. "/GLFW/include"
+
+group "Dependencies"
+
+    include "OpenBit/vendor"
+
+group ""
 
 include "OpenBit"
 include "Sandbox"

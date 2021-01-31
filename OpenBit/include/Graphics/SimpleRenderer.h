@@ -10,8 +10,9 @@ namespace Bit {
     {
     public:
         static void Init();
+        static void Shutdown();
+
         static void Submit(const glm::mat4& transform, const Ref<Texture2D>& texture);
-        
         static void BeginScene(const glm::mat4& camera);
         static void EndScene();
 

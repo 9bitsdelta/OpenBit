@@ -2,7 +2,7 @@
 
 #include "Graphics/API/Buffer.h"
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 namespace Bit {
     

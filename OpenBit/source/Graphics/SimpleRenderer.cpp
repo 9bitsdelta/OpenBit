@@ -22,16 +22,22 @@ namespace Bit {
                 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
                 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
         };
-        Bit::Ref<Bit::VertexBuffer> vertexBuffer = Bit::CreateRef<Bit::VertexBuffer>(vert, sizeof(vert));
-        Bit::BufferLayout layout = {
-            { Bit::ShaderDataType::Float3, "a_Position" },
-            { Bit::ShaderDataType::Float2, "a_UV" },
+        Ref<VertexBuffer> vertexBuffer = CreateRef<VertexBuffer>(vert, sizeof(vert));
+        BufferLayout layout = {
+            { ShaderDataType::Float3, "a_Position" },
+            { ShaderDataType::Float2, "a_UV" },
         };
         vertexBuffer->SetLayout(layout);
         s_Data.VAO->SetVertexBuffer(vertexBuffer);
         uint32_t indices[] = { 0, 1, 2, 2, 3, 0 };
-        Bit::Ref<Bit::IndexBuffer> indexBuffer = Bit::CreateRef<Bit::IndexBuffer>(indices, sizeof(indices) / sizeof(uint32_t));
+        Ref<IndexBuffer> indexBuffer = CreateRef<IndexBuffer>(indices, sizeof(indices) / sizeof(uint32_t));
         s_Data.VAO->SetIndexBuffer(indexBuffer);
+    }
+
+    void SimpleRenderer::Shutdown()
+    {
+        s_Data.shader.reset();
+        s_Data.VAO.reset();
     }
 
     void SimpleRenderer::BeginScene(const glm::mat4& camera)

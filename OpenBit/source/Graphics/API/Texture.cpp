@@ -1,7 +1,7 @@
 #include "Graphics/API/Texture.h"
 #include "Graphics/API/stb_image.h"
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 namespace Bit {
     

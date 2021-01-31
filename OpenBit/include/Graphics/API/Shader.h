@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "glm/glm.hpp"
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 namespace Bit {
 
