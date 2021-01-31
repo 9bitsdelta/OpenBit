@@ -22,5 +22,5 @@ Clone or download the repo. If you have Visual Studio Code, there are scripts al
 	bash scripts/genproj-linux.sh
 	make
 
-The dependencies not included in this repo are [GLFW](https://www.glfw.org) and [GLEW](glew.sourceforge.net).<br>
+The dependencies not included in this repo are [GLFW](https://www.glfw.org) and [GLEW](https://glew.sourceforge.net).<br>
 To link with them you need to either install the packages for the development libraries or add them manually in the `premake5.lua` files.
