@@ -32,11 +32,6 @@ namespace Bit {
 
         OnUpdate(timestep);
 
-        GraphicsAPI::SetClearColor( {0.1f, 0.1f, 0.1f, 1.0f} );
-        GraphicsAPI::Clear();
-
-        OnRender();
-
         m_Window->OnUpdate();
     }
 

@@ -34,7 +34,7 @@ namespace Bit {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_DEPTH_TEST);
+        //glEnable(GL_DEPTH_TEST);
 
         BIT_CORE_INFO("OpenGL Info:");
         BIT_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));

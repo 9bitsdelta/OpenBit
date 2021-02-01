@@ -17,10 +17,10 @@ namespace Bit {
         s_Data.shader = CreateRef<Shader>("assets/shaders/texture.glsl");
         s_Data.VAO = CreateRef<VertexArray>();
         float vert[] = {
-                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+                 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f
         };
         Ref<VertexBuffer> vertexBuffer = CreateRef<VertexBuffer>(vert, sizeof(vert));
         BufferLayout layout = {

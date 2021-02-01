@@ -17,7 +17,6 @@ namespace Bit {
 
         virtual void OnEvent(Event& event) {}
         virtual void OnUpdate(Timestep& ts) {}
-        virtual void OnRender() {}
 
     private:
         void OnRun();

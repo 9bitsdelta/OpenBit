@@ -11,8 +11,8 @@ namespace Bit {
         uint32_t Width, Height;
     
         WindowProps(std::string t = "OpenBit",
-                    uint32_t w = 800,
-                    uint32_t h = 600)
+                    uint32_t w = 1280,
+                    uint32_t h = 720)
             : Title(t), Width(w), Height(h)
         {
 
