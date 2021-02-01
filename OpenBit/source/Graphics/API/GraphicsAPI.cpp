@@ -22,7 +22,7 @@ namespace Bit {
 
     void GraphicsAPI::Init()
     {
-    BIT_CORE_ASSERT( gladLoadGL() , "GLAD could not init!" );
+        BIT_CORE_ASSERT( gladLoadGL() , "GLAD could not init!" );
 
     #ifdef BIT_DEBUG
         glEnable(GL_DEBUG_OUTPUT);
@@ -34,7 +34,7 @@ namespace Bit {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glEnable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
 
         BIT_CORE_INFO("OpenGL Info:");
         BIT_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
@@ -65,9 +65,10 @@ namespace Bit {
         return texture_units;
     }
 
-    void GraphicsAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
+    void GraphicsAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
     {
-        glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+        uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
+        glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 

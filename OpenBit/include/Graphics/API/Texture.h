@@ -18,12 +18,18 @@ namespace Bit {
         virtual void SetData(void* data, uint32_t size) = 0;
 
         virtual void Bind(uint32_t slot = 0) const = 0;
+
+        virtual bool operator==(const Texture& other) const = 0;
+
     };
 
     class Texture2D : public Texture
     {
     public:
-        Texture2D(uint32_t width, uint32_t height);
+        static Ref<Texture2D> Create(const uint32_t& width, const uint32_t& height);
+        static Ref<Texture2D> Create(const std::string& path);
+
+        Texture2D(const uint32_t& width, const uint32_t& height);
         Texture2D(const std::string& path);
         virtual ~Texture2D();
 
@@ -33,6 +39,11 @@ namespace Bit {
         virtual void SetData(void* data, uint32_t size) override;
 
         virtual void Bind(uint32_t slot = 0) const override;
+
+        virtual bool operator==(const Texture& other) const override
+        {
+            return m_RendererID == ((Texture2D&)other).m_RendererID;
+        }
 
     protected:
         std::string m_Path;

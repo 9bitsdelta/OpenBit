@@ -220,7 +220,7 @@ namespace Bit {
         glUniform4f(location, value.x, value.y, value.z, value.w);
     }
 
-    void Shader::UploadUniformInt1v(const std::string& name, const int* values, const uint32_t& count)
+    void Shader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count)
     {
         GLint location = glGetUniformLocation(m_RendererID, name.c_str());
         glUniform1iv(location, count, values);

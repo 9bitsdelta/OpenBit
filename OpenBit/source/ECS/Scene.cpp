@@ -4,7 +4,7 @@
 #include "ECS/Entity.h"
 #include "ECS/Components.h"
 
-#include "Graphics/SimpleRenderer.h"
+#include "Graphics/Batch2DRenderer.h"
 
 #include <entt.hpp>
 
@@ -36,17 +36,17 @@ namespace Bit {
 
     void Scene::OnRender(const glm::mat4& camera)
     {
-        SimpleRenderer::BeginScene(camera);
+        Renderer2D::BeginScene(camera);
 
         auto view = m_Registry.view<TransformComponent, SpriteRendererComponent>();
         for(auto entity : view)
         {
             auto& transform = view.get<TransformComponent>(entity);
             auto& sprite = view.get<SpriteRendererComponent>(entity);
-            SimpleRenderer::Submit( transform.GetTransform() , sprite.Texture );
+            Renderer2D::DrawQuad( transform.GetTransform() , sprite.Texture );
         }
 
-        SimpleRenderer::EndScene();
+        Renderer2D::EndScene();
     }
 
     void Scene::OnUpdate(Timestep ts)

@@ -8,23 +8,23 @@ class Sandbox : public Bit::Application
 public:
     Sandbox()
     {
-        Bit::SimpleRenderer::Init();
+        Bit::Renderer2D::Init();
 
-        Bit::Ref<Bit::Texture2D> texture = Bit::CreateRef<Bit::Texture2D>("assets/textures/link.png");
+        Bit::Ref<Bit::Texture2D> texture = Bit::Texture2D::Create("assets/textures/link.png");
 
-        Bit::Entity mountain = m_Scene.CreateEntity("link");
-        auto& transform = mountain.GetComponent<Bit::TransformComponent>();
+        Bit::Entity link = m_Scene.CreateEntity("link");
+        auto& transform = link.GetComponent<Bit::TransformComponent>();
+        transform.Scale    = { (float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f };
         transform.Position = { 0.0f, 0.0f, 0.0f };
-        transform.Scale = { 64.0f, 88.0f, 1.0f };
-        mountain.AddComponent<Bit::SpriteRendererComponent>(texture);
-
+        link.AddComponent<Bit::SpriteRendererComponent>(texture);
+        
         m_Projection = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f);
         m_View = glm::mat4(1.0f);
     }
 
     ~Sandbox()
     {
-        Bit::SimpleRenderer::Shutdown();
+        Bit::Renderer2D::Shutdown();
     }
 
     void OnUpdate(Bit::Timestep& ts)
@@ -83,7 +83,7 @@ public:
 
     bool OnMouseScrolled(Bit::MouseScrolledEvent& event)
     {
-        m_ZoomLevel -= event.GetYOffset() * 0.25f;
+        m_ZoomLevel -= event.GetYOffset() * 0.5f;
         m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
         m_Projection = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f);
 
@@ -98,7 +98,7 @@ private:
     glm::mat4 m_Projection;
     glm::mat4 m_View;
 
-    float m_ZoomLevel = 100.0f;
+    float m_ZoomLevel = 50.0f;
 
     float m_AspectRatio = 16.0f/9.0f;
 

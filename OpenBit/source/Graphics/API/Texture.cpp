@@ -10,7 +10,17 @@ namespace Bit {
     // Texture2D //////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
     
-    Texture2D::Texture2D(uint32_t width, uint32_t height)
+    Ref<Texture2D> Texture2D::Create(const uint32_t& width, const uint32_t& height)
+    {
+        return std::make_shared<Texture2D>(width, height);
+    }
+
+    Ref<Texture2D> Texture2D::Create(const std::string& path)
+    {
+        return std::make_shared<Texture2D>(path);
+    }
+
+    Texture2D::Texture2D(const uint32_t& width, const uint32_t& height)
         : m_Width(width), m_Height(height)
     {
         m_InternalFormat = GL_RGBA8;
@@ -56,13 +66,12 @@ namespace Bit {
         glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
         glTextureStorage2D(m_RendererID, 1, internalFormat, width, height);
         
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
         
         glTextureSubImage2D(m_RendererID, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
-        glBindTexture(GL_TEXTURE_2D, 0);
 
         stbi_image_free(data);
     }

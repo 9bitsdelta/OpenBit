@@ -17,7 +17,7 @@ namespace Bit {
 
         static uint32_t GetTextureSlots();
 
-        static void DrawIndexed(const Ref<VertexArray>& vertexArray);
+        static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
     };
 
 }

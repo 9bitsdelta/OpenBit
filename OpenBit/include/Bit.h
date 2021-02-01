@@ -16,6 +16,7 @@
 //GRAPHICS
 #include "Graphics/API/GraphicsAPI.h"
 #include "Graphics/SimpleRenderer.h"
+#include "Graphics/Batch2DRenderer.h"
 
 //ECS
 #include "ECS/Scene.h"
