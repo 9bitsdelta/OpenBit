@@ -6,8 +6,6 @@
 #include <unordered_map>
 #include "glm/glm.hpp"
 
-#include "glad/glad.h"
-
 namespace Bit {
 
     class Shader
@@ -40,8 +38,8 @@ namespace Bit {
     private:
 
         std::string ReadFile(const std::string& filepath);
-        std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
-        void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+        std::unordered_map<uint32_t, std::string> PreProcess(const std::string& source);
+        void Compile(const std::unordered_map<uint32_t, std::string>& shaderSources);
 
     private:
         uint32_t m_RendererID;

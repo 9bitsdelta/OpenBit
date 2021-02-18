@@ -15,8 +15,7 @@ project "Sandbox"
         "%{wks.location}/OpenBit/include",
         "%{Includes.spdlog}",
         "%{Includes.glm}",
-        "%{Includes.entt}",
-        "%{Includes.glad}"
+        "%{Includes.entt}"
     }
     
     links {

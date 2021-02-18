@@ -10,14 +10,12 @@ project "OpenBit"
     pchheader "bitpch.h"
     pchsource "source/bitpch.cpp"
 
-    files
-    {
+    files {
         "source/**",
         "include/**"
     }
     
-    includedirs
-    {
+    includedirs {
         "include",
         "%{Includes.spdlog}",
         "%{Includes.glm}",
@@ -26,8 +24,7 @@ project "OpenBit"
         "%{Includes.glfw}"
     }
     
-    defines
-    {
+    defines {
         "_CRT_SECURE_NO_WARNINGS",
         "GLFW_INCLUDE_NONE"
     }
@@ -35,13 +32,11 @@ project "OpenBit"
     filter "system:windows"
         systemversion "latest"
         
-        defines
-        {
+        defines {
             "BIT_PLATFORM_WINDOWS"
         }
         
-        links
-        {
+        links {
             "opengl32.lib"
         }
         
@@ -49,13 +44,11 @@ project "OpenBit"
         systemversion "latest"
         toolset("gcc")
 
-        defines
-        {
+        defines {
             "BIT_PLATFORM_LINUX"
         }
         
-        links
-        {
+        links {
             "X11",
             "pthread",
             "dl",

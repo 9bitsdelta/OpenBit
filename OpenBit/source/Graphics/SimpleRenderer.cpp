@@ -36,8 +36,7 @@ namespace Bit {
 
     void SimpleRenderer::Shutdown()
     {
-        s_Data.shader.reset();
-        s_Data.VAO.reset();
+        s_Data.~SimpleRendererData();
     }
 
     void SimpleRenderer::BeginScene(const glm::mat4& camera)
@@ -53,11 +52,10 @@ namespace Bit {
 
     void SimpleRenderer::Submit(const glm::mat4& transform, const Ref<Texture2D>& texture)
     {
-        s_Data.VAO->Bind();
         s_Data.shader->Bind();
         s_Data.shader->UploadUniformMat4("u_Transform", transform);
         texture->Bind();
-        GraphicsAPI::DrawIndexed(s_Data.VAO);
+        GraphicsAPI::DrawIndexed(DrawMethod::Triangles, s_Data.VAO);
     }
 
 }

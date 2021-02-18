@@ -4,7 +4,7 @@
 #include "ECS/Entity.h"
 #include "ECS/Components.h"
 
-#include "Graphics/Batch2DRenderer.h"
+#include "Graphics/SpriteRenderer.h"
 
 #include <entt.hpp>
 
@@ -34,24 +34,31 @@ namespace Bit {
         m_Registry.destroy(entity);
     }
 
-    void Scene::OnRender(const glm::mat4& camera)
+    void Scene::OnRender()
     {
-        Renderer2D::BeginScene(camera);
+        auto camera = *m_Camera;
+        SpriteRenderer::BeginScene(camera);
+        auto group = m_Registry.group<SpriteComponent>(entt::get<TransformComponent>);
+        group.sort<TransformComponent>([&camera](const auto& lhs, const auto& rhs) {
+            float leftLength = glm::dot(lhs.Position - camera.GetPosition(), camera.GetForwardDirection());
+            float rightLength = glm::dot(rhs.Position - camera.GetPosition(), camera.GetForwardDirection());
+            return leftLength > rightLength;
+        });
 
-        auto view = m_Registry.view<TransformComponent, SpriteRendererComponent>();
-        for(auto entity : view)
+        for(auto entity : group)
         {
-            auto& transform = view.get<TransformComponent>(entity);
-            auto& sprite = view.get<SpriteRendererComponent>(entity);
-            Renderer2D::DrawQuad( transform.GetTransform() , sprite.Texture );
+            auto& transform = group.get<TransformComponent>(entity);
+            auto& sprite = group.get<SpriteComponent>(entity);
+            if(sprite.Texture==nullptr) SpriteRenderer::DrawQuad(transform.GetTransform(), sprite.Color);
+            else SpriteRenderer::DrawQuad( transform.GetTransform(), sprite.Texture, 1.0f, sprite.Color);
         }
 
-        Renderer2D::EndScene();
+        SpriteRenderer::EndScene();
     }
 
     void Scene::OnUpdate(Timestep ts)
     {
-
+ 
     }
 
 }

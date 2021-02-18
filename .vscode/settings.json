@@ -1,6 +1,7 @@
 {
     "Lua.diagnostics.disable": [],
     "files.associations": {
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "cmath": "cpp"
     }
 }

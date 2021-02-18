@@ -8,6 +8,7 @@ namespace Bit {
     class VertexArray
     {
     public:
+        static Ref<VertexArray> Create();
         VertexArray();
         ~VertexArray();
 

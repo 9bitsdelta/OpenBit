@@ -1,7 +1,4 @@
 #pragma once
-
-#include "glad/glad.h"
-
 #include "Core/Base.h"
 
 namespace Bit {
@@ -16,24 +13,7 @@ namespace Bit {
         Stream_Draw = 0, Stream_Read, Stream_Copy, Static_Draw, Static_Read, Static_Copy, Dynamic_Draw, Dynamic_Read, Dynamic_Copy
     };
 
-    static uint32_t BufferTypeToGL(BufferType type)
-    {
-        switch (type)
-        {
-        case BufferType::Stream_Draw:  return GL_STREAM_DRAW;
-        case BufferType::Stream_Read:  return GL_STREAM_READ;
-        case BufferType::Stream_Copy:  return GL_STREAM_COPY;
-        case BufferType::Static_Draw:  return GL_STATIC_DRAW;
-        case BufferType::Static_Read:  return GL_STATIC_READ;
-        case BufferType::Static_Copy:  return GL_STATIC_COPY;
-        case BufferType::Dynamic_Draw: return GL_DYNAMIC_DRAW;
-        case BufferType::Dynamic_Read: return GL_DYNAMIC_READ;
-        case BufferType::Dynamic_Copy: return GL_DYNAMIC_COPY;
-        }
-
-        BIT_CORE_ASSERT(false, "Unknown Vertex Buffer Type!");
-        return 0;
-    }
+    static uint32_t BufferTypeToGL(BufferType type);
 
     static uint32_t ShaderDataTypeSize(ShaderDataType type)
     {
@@ -131,6 +111,7 @@ namespace Bit {
     class VertexBuffer
     {
     public:
+        static Ref<VertexBuffer> Create(float* vertices, uint32_t size, const BufferType& type = BufferType::Static_Draw);
         VertexBuffer(float* vertices, uint32_t size, const BufferType& type = BufferType::Static_Draw);
         ~VertexBuffer();
 
@@ -150,6 +131,7 @@ namespace Bit {
     class IndexBuffer
     {
     public:
+        static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t size, const BufferType& type = BufferType::Static_Draw);
         IndexBuffer(uint32_t* indices, uint32_t size, const BufferType& type = BufferType::Static_Draw);
         ~IndexBuffer();
 

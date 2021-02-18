@@ -6,10 +6,34 @@
 
 namespace Bit {
     
+    static uint32_t BufferTypeToGL(BufferType type)
+    {
+        switch (type)
+        {
+            case BufferType::Stream_Draw:  return GL_STREAM_DRAW;
+            case BufferType::Stream_Read:  return GL_STREAM_READ;
+            case BufferType::Stream_Copy:  return GL_STREAM_COPY;
+            case BufferType::Static_Draw:  return GL_STATIC_DRAW;
+            case BufferType::Static_Read:  return GL_STATIC_READ;
+            case BufferType::Static_Copy:  return GL_STATIC_COPY;
+            case BufferType::Dynamic_Draw: return GL_DYNAMIC_DRAW;
+            case BufferType::Dynamic_Read: return GL_DYNAMIC_READ;
+            case BufferType::Dynamic_Copy: return GL_DYNAMIC_COPY;
+        }
+
+        BIT_CORE_ASSERT(false, "Unknown Vertex Buffer Type!");
+        return 0;
+    }
+
     /////////////////////////////////////////////////////////////////////////////
     // VertexBuffer /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
     
+    Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size, const BufferType& type)
+    {
+        return std::make_shared<VertexBuffer>(vertices, size, type);
+    }
+
     VertexBuffer::VertexBuffer(float* vertices, uint32_t size, const BufferType& type)
     {
         glCreateBuffers(1, &m_RendererID);
@@ -42,6 +66,11 @@ namespace Bit {
     /////////////////////////////////////////////////////////////////////////////
     // IndexBuffer //////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
+
+    Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size, const BufferType& type)
+    {
+        return std::make_shared<IndexBuffer>(indices, size, type);
+    }
 
     IndexBuffer::IndexBuffer(uint32_t* indices, uint32_t count, const BufferType& type)
         : m_Count(count)

@@ -3,16 +3,13 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
+#include "glad/glad.h"
 
 namespace Bit {
 
     // ----- SHADER CLASS -----
 
-    static GLenum ShaderTypeFromString(const std::string& type)
+    static uint32_t ShaderTypeFromString(const std::string& type)
     {
         if (type == "vertex")
             return GL_VERTEX_SHADER;
@@ -76,9 +73,9 @@ namespace Bit {
         return result;
     }
 
-    std::unordered_map<GLenum, std::string> Shader::PreProcess(const std::string& source)
+    std::unordered_map<uint32_t, std::string> Shader::PreProcess(const std::string& source)
     {
-        std::unordered_map<GLenum, std::string> shaderSources;
+        std::unordered_map<uint32_t, std::string> shaderSources;
 
         const char* typeToken = "#type";
         size_t typeTokenLength = strlen(typeToken);
@@ -99,7 +96,7 @@ namespace Bit {
         return shaderSources;
     }
 
-    void Shader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
+    void Shader::Compile(const std::unordered_map<uint32_t, std::string>& shaderSources)
     {
         GLuint program = glCreateProgram();
         BIT_CORE_ASSERT(shaderSources.size() <= 2, "Bit GraphicsAPI only supports 2 shaders (for now)");

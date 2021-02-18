@@ -7,6 +7,23 @@
 
 namespace Bit {
 
+    static uint32_t DrawMethodToGL(DrawMethod type)
+    {
+        switch(type)
+        {
+        case DrawMethod::Points:          return GL_POINTS;
+        case DrawMethod::Lines:           return GL_LINES;
+        case DrawMethod::Line_Strip:      return GL_LINE_STRIP;
+        case DrawMethod::Line_Loop:       return GL_LINE_LOOP;
+        case DrawMethod::Triangles:       return GL_TRIANGLES;
+        case DrawMethod::Triangle_Strip:  return GL_TRIANGLE_STRIP;
+        case DrawMethod::Triangle_Fan:    return GL_TRIANGLE_FAN;
+        }
+
+        BIT_CORE_ASSERT(false, "Unknown Draw Method");
+        return 0;
+    }
+
     void OpenGLLogMessage(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int length, const char* message, const void* userParam)
     {
         switch (severity)
@@ -31,10 +48,6 @@ namespace Bit {
 
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
     #endif
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_DEPTH_TEST);
 
         BIT_CORE_INFO("OpenGL Info:");
         BIT_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
@@ -65,11 +78,13 @@ namespace Bit {
         return texture_units;
     }
 
-    void GraphicsAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
+    void GraphicsAPI::DrawIndexed(DrawMethod type, const Ref<VertexArray>& vertexArray, uint32_t indexCount)
     {
+        vertexArray->Bind();
         uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
-        glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(DrawMethodToGL(type), count, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
+        vertexArray->Unbind();
     }
 
 }

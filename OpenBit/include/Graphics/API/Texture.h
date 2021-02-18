@@ -3,8 +3,6 @@
 #include "Core/Base.h"
 #include <string>
 
-#include "glad/glad.h"
-
 namespace Bit {
     
     class Texture
@@ -49,7 +47,7 @@ namespace Bit {
         std::string m_Path;
         uint32_t m_Width, m_Height;
         uint32_t m_RendererID;
-        GLenum m_InternalFormat, m_DataFormat;
+        uint32_t m_InternalFormat, m_DataFormat;
 
     };
     

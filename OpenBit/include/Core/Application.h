@@ -15,6 +15,9 @@ namespace Bit {
         Application();
         virtual ~Application();
 
+        Window& GetWindow() { return *m_Window; }
+        static Application& Get() { return *s_Instance; }
+
         virtual void OnEvent(Event& event) {}
         virtual void OnUpdate(Timestep& ts) {}
 

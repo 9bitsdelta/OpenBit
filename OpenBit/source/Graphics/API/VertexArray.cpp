@@ -1,9 +1,11 @@
 #include "bitpch.h"
 #include "Graphics/API/VertexArray.h"
 
+#include "glad/glad.h"
+
 namespace Bit {
 
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+    static GLenum ShaderDataTypeToGL(ShaderDataType type)
     {
         switch (type)
         {
@@ -22,6 +24,11 @@ namespace Bit {
 
         BIT_CORE_ASSERT(false, "Unknown Shader Data Type!");
         return 0;
+    }
+
+    Ref<VertexArray> VertexArray::Create()
+    {
+        return std::make_shared<VertexArray>();
     }
 
     VertexArray::VertexArray()
@@ -58,7 +65,7 @@ namespace Bit {
             glEnableVertexAttribArray(index);
             glVertexAttribPointer(index,
                 element.GetComponentCount(),
-                ShaderDataTypeToOpenGLBaseType(element.Type),
+                ShaderDataTypeToGL(element.Type),
                 element.Normalized ? GL_TRUE : GL_FALSE,
                 layout.GetStride(),
                 (const void*)element.Offset);

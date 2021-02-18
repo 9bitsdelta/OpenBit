@@ -7,6 +7,11 @@
 
 namespace Bit {
 
+    enum class DrawMethod
+    {
+        Points = 0, Lines, Line_Strip, Line_Loop, Triangles, Triangle_Strip, Triangle_Fan
+    };
+
     class GraphicsAPI
     {
     public:
@@ -17,7 +22,7 @@ namespace Bit {
 
         static uint32_t GetTextureSlots();
 
-        static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
+        static void DrawIndexed(DrawMethod type, const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
     };
 
 }

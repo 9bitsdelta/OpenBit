@@ -6,7 +6,7 @@
 
 namespace Bit {
 
-    class Renderer2D
+    class SpriteRenderer
     {
     public:
         static void Init();

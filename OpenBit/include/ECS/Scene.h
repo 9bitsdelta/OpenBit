@@ -3,6 +3,8 @@
 
 #include "Core/Timestep.h"
 
+#include "Graphics/Camera.h"
+
 #include <entt.hpp>
 #include <glm/glm.hpp>
 
@@ -19,12 +21,20 @@ namespace Bit {
         Entity CreateEntity(const std::string& name = std::string());
         void DestroyEntity(Entity entity);
 
-        void OnRender(const glm::mat4& camera); //TODO: OnRender should be able to use different pipelines
+        void OnRender(); //TODO: OnRender should be able to use different pipelines
         void OnUpdate(Timestep ts);
 
-    public:
+        void SetCamera(Camera* camera) { m_Camera = camera; }
+        void SetParallax(bool val) { m_Parallax = val; }
+
+        bool IsParallax() const { return m_Parallax; }
+    
+    private:
         entt::registry m_Registry;
-        //TODO: Bind a scene camera;
+
+        Camera* m_Camera;
+
+        bool m_Parallax = true;
 
         friend class Entity;
     };

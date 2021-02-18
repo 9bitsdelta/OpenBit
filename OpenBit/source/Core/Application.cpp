@@ -29,7 +29,9 @@ namespace Bit {
         float time = m_Window->GetTime();
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
-
+        
+        GraphicsAPI::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+        GraphicsAPI::Clear();
         OnUpdate(timestep);
 
         m_Window->OnUpdate();

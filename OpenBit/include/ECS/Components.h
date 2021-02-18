@@ -40,18 +40,23 @@ namespace Bit {
 
     };
 
-    struct SpriteRendererComponent
+    struct SpriteComponent
     {
         //bool IsVisible = true;
         Ref<Texture2D> Texture = nullptr;
+        glm::vec4 Color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-        SpriteRendererComponent() = default;
-        SpriteRendererComponent(const SpriteRendererComponent&) = default;
-        SpriteRendererComponent(const Ref<Texture2D>& tex)
+        SpriteComponent() = default;
+        SpriteComponent(const SpriteComponent&) = default;
+        SpriteComponent(const Ref<Texture2D>& tex)
             :Texture(tex) {}
+        SpriteComponent(const glm::vec4& color)
+            :Color(color) {}
+        SpriteComponent(const Ref<Texture2D>& tex, const glm::vec4& color)
+            :Texture(tex), Color(color) {}
     };
 
-    struct CameraComponent
+    struct PrimitiveComponent
     {
 
     };
