@@ -7,7 +7,7 @@ namespace Bit {
 
     struct PrimitiveRendererData
     {
-        Ref<Shader> Shader;
+        Ref<Shader> primitiveShader;
     };
 
     static PrimitiveRendererData s_Data;
@@ -39,7 +39,7 @@ namespace Bit {
                 color = u_Color;
             })";
 
-        s_Data.Shader = Shader::Create("Primitive", shaderVertSrc, shaderFragSrc);
+        s_Data.primitiveShader = Shader::Create("Primitive", shaderVertSrc, shaderFragSrc);
     }
 
     void PrimitiveRenderer::Shutdown()
@@ -49,17 +49,17 @@ namespace Bit {
 
     void PrimitiveRenderer::BeginScene(const glm::mat4& cam)
     {
-        s_Data.Shader->Bind();
-        s_Data.Shader->UploadUniformMat4("u_ViewProjection", cam);
+        s_Data.primitiveShader->Bind();
+        s_Data.primitiveShader->UploadUniformMat4("u_ViewProjection", cam);
     }
 
     void PrimitiveRenderer::EndScene()
     {
-        s_Data.Shader->Unbind();
+        s_Data.primitiveShader->Unbind();
     }
 
-    void PrimitiveRenderer::SetShader(const Ref<Shader>& shader) { s_Data.Shader = shader; }
-    Ref<Shader>& PrimitiveRenderer::GetShader() { return s_Data.Shader; }
+    void PrimitiveRenderer::SetShader(const Ref<Shader>& shader) { s_Data.primitiveShader = shader; }
+    Ref<Shader>& PrimitiveRenderer::GetShader() { return s_Data.primitiveShader; }
 
     void PrimitiveRenderer::Draw(const DrawMethod& type, std::vector<float> points, std::vector<uint32_t> indices, const glm::vec4& color)
     {
@@ -71,7 +71,7 @@ namespace Bit {
         Ref<IndexBuffer> index = IndexBuffer::Create(indices.data(), indices.size());
         arr->SetVertexBuffer(buff);
         arr->SetIndexBuffer(index);
-        s_Data.Shader->UploadUniformFloat4("u_Color", color);
+        s_Data.primitiveShader->UploadUniformFloat4("u_Color", color);
         GraphicsAPI::DrawIndexed(type, arr, arr->GetIndexBuffer()->GetCount());
     }
 
