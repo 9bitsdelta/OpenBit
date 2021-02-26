@@ -197,4 +197,14 @@ namespace Bit {
         return glfwGetTime();
     }
 
+    uint32_t Window::GetWidth() const
+    {
+        return s_Data.Width;
+    }
+
+    uint32_t Window::GetHeight() const
+    {
+        return s_Data.Height;
+    }
+
 }

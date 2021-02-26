@@ -19,15 +19,17 @@
 #include "Graphics/Camera.h"
 #include "Graphics/SimpleRenderer.h"
 #include "Graphics/SpriteRenderer.h"
-#include "Graphics/PrimitivesRenderer.h"
+#include "Graphics/PrimitiveRenderer.h"
 
 //ECS
 #include "ECS/Scene.h"
 #include "ECS/Entity.h"
 #include "ECS/Components.h"
 
+//External
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <imgui.h>
 
 /*
  * ENTRY POINT

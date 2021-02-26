@@ -21,10 +21,9 @@ namespace Bit {
         Entity CreateEntity(const std::string& name = std::string());
         void DestroyEntity(Entity entity);
 
-        void OnRender(); //TODO: OnRender should be able to use different pipelines
-        void OnUpdate(Timestep ts);
+        void OnUpdate(Timestep& ts); //TODO: RENDERING WITH MULTIPLE PIPELINES!!!!!!!
 
-        void SetCamera(Camera* camera) { m_Camera = camera; }
+        void SetCamera(Ref<Camera> camera) { m_Camera = camera; }
         void SetParallax(bool val) { m_Parallax = val; }
 
         bool IsParallax() const { return m_Parallax; }
@@ -32,7 +31,7 @@ namespace Bit {
     private:
         entt::registry m_Registry;
 
-        Camera* m_Camera;
+        Ref<Camera> m_Camera;
 
         bool m_Parallax = true;
 

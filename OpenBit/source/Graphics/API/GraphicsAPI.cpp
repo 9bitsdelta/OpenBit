@@ -78,7 +78,7 @@ namespace Bit {
         return texture_units;
     }
 
-    void GraphicsAPI::DrawIndexed(DrawMethod type, const Ref<VertexArray>& vertexArray, uint32_t indexCount)
+    void GraphicsAPI::DrawIndexed(const DrawMethod& type, const Ref<VertexArray>& vertexArray, uint32_t indexCount)
     {
         vertexArray->Bind();
         uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();

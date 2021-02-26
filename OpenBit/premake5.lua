@@ -4,7 +4,7 @@ project "OpenBit"
     cppdialect "C++17"
     staticruntime "on"
     
-    targetdir ("%{wks.location}/bin/" .. outputdir)
+    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}" )
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
     pchheader "bitpch.h"
@@ -21,7 +21,8 @@ project "OpenBit"
         "%{Includes.glm}",
         "%{Includes.entt}",
         "%{Includes.glad}",
-        "%{Includes.glfw}"
+        "%{Includes.glfw}",
+        "%{Includes.imgui}"
     }
     
     defines {

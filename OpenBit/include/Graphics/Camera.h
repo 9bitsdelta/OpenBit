@@ -13,11 +13,12 @@ namespace Bit {
     class Camera
     {
     public:
-        Camera();
+        static Ref<Camera> Create(Projection type);
+        Camera(Projection type);
 
         void SetType(Projection type) { m_Type = type; UpdateViewProjection(); }
         void SetPosition(const glm::vec3& position) { m_Position = position; UpdateView(); }
-        void SetRotation(float pitch, float yaw) { m_Pitch = pitch, m_Yaw = yaw; UpdateView(); }
+        void SetRotation(float pitch, float yaw, float roll) { m_Pitch = pitch, m_Yaw = yaw; m_Roll = roll; UpdateView(); }
 
         void SetPerspectiveProjection(float verticalFov, float aspectRatio, float zNear, float zFar);
         void SetOrthographicProjection(float left, float right, float bottom, float top);
@@ -26,7 +27,8 @@ namespace Bit {
         glm::vec3 GetPosition() const { return m_Position; }
         float GetPitch() const { return m_Pitch; }
         float GetYaw() const { return m_Yaw; }
-        operator glm::mat4() const { return m_ViewProjection; }
+
+        glm::mat4 Get() const { return m_ViewProjection; }
     
         glm::vec3 GetUpDirection() const;
         glm::vec3 GetRightDirection() const;
@@ -49,7 +51,7 @@ namespace Bit {
         glm::mat4 m_ViewProjection = glm::mat4(1.0f);
 
         glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-        float m_Pitch = 0.0f, m_Yaw = 0.0f;
+        float m_Pitch = 0.0f, m_Yaw = 0.0f, m_Roll = 0.0f;
     };
 
 }

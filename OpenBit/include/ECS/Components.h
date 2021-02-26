@@ -10,6 +10,8 @@
 
 #include "Graphics/API/GraphicsAPI.h"
 
+#include "ECS/ScriptableEntity.h"
+
 namespace Bit {
 
     struct TagComponent
@@ -20,6 +22,11 @@ namespace Bit {
         TagComponent(const TagComponent&) = default;
         TagComponent(const std::string& tag)
             :Tag(tag) {}
+
+        operator std::string& () {
+            return Tag;
+        }
+
     };
 
     struct TransformComponent
@@ -37,6 +44,8 @@ namespace Bit {
                  * glm::toMat4(glm::quat(Rotation))
                  * glm::scale(glm::mat4(1.0f), Scale);
         }
+
+
 
     };
 
@@ -58,7 +67,31 @@ namespace Bit {
 
     struct PrimitiveComponent
     {
+        bool IsVisible = true;
+        DrawMethod Type;
+        std::vector<float> Points;
+        std::vector<uint32_t> Index;
+        glm::vec4 Color;
 
+        PrimitiveComponent() = default;
+        PrimitiveComponent(const PrimitiveComponent&) = default;
+        PrimitiveComponent(const DrawMethod type, const std::vector<float>& points, const std::vector<uint32_t> index, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f } )
+            :Type(type), Points(points), Index(index), Color(color) {}
+    };
+
+    struct NativeScriptComponent
+    {
+        ScriptableEntity* Instance = nullptr;
+
+        ScriptableEntity* (*InstantiateScript)();
+        void (*DestroyScript)(NativeScriptComponent*);
+
+        template<typename T>
+        void Bind()
+        {
+            InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+            DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
+        }
     };
 
 }

@@ -3,7 +3,7 @@
 #include "Graphics/API/VertexArray.h"
 #include "Graphics/API/Texture.h"
 #include "Graphics/API/Shader.h"
-#include "Graphics/API/Framebuffers.h"
+#include "Graphics/API/Framebuffer.h"
 
 namespace Bit {
 
@@ -22,7 +22,7 @@ namespace Bit {
 
         static uint32_t GetTextureSlots();
 
-        static void DrawIndexed(DrawMethod type, const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
+        static void DrawIndexed(const DrawMethod& type, const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0);
     };
 
 }

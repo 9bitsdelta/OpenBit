@@ -6,9 +6,15 @@
 
 namespace Bit {
 
-    Camera::Camera()
+    Ref<Camera> Camera::Create(Projection type)
     {
+        return std::make_shared<Camera>(type);
+    }
 
+    Camera::Camera(Projection type)
+        :m_Type(type)
+    {
+        UpdateViewProjection();
     }
 
     void Camera::SetOrthographicProjection(float left, float right, float bottom, float top)
@@ -59,6 +65,6 @@ namespace Bit {
 
 	glm::quat Camera::GetOrientation() const
 	{
-		return glm::quat(glm::vec3(-m_Pitch, -m_Yaw, 0.0f));
+		return glm::quat(glm::vec3(-m_Pitch, -m_Yaw, -m_Roll));
 	}
 }

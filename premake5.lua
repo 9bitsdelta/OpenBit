@@ -20,12 +20,14 @@ Includes["glm"]     = vendor .. "/glm"
 Includes["entt"]    = vendor .. "/entt"
 Includes["glad"]    = vendor .. "/GLAD/include"
 Includes["glfw"]    = vendor .. "/GLFW/include"
+Includes["imgui"]   = vendor .. "/ImGui"
 
 group "Dependencies"
 
     include "OpenBit/vendor"
 
 group ""
-
+    
+include "test/Kepler"
+include "test/Sandbox"
 include "OpenBit"
-include "Sandbox"
