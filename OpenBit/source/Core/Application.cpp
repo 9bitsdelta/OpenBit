@@ -73,7 +73,7 @@ namespace Bit {
         dispatcher.Dispatch<WindowResizeEvent>(BIT_BIND_EVENT_FN(Application::OnWindowResize));
 
         m_ImGui.OnEvent(event);
-
+        
         OnEvent(event);
     }
 

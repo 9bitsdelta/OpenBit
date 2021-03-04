@@ -21,6 +21,8 @@ Includes["entt"]    = vendor .. "/entt"
 Includes["glad"]    = vendor .. "/GLAD/include"
 Includes["glfw"]    = vendor .. "/GLFW/include"
 Includes["imgui"]   = vendor .. "/ImGui"
+Includes["lua"]     = vendor .. "/lua/src"
+Includes["stbi"]    = vendor .. "/stb_image"
 
 group "Dependencies"
 

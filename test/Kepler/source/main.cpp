@@ -45,6 +45,7 @@ public:
             m_Sun.AddComponent<Bit::PrimitiveComponent>(Bit::DrawMethod::Triangle_Fan, planetVert, planetIndex, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
         }
 
+        m_Planets.reserve(8);
         QUICK_ADD_PLANET("Mercury", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), OrbitingComponent(3.301f, 0.205f, 87.97f));
         QUICK_ADD_PLANET("Venus", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), OrbitingComponent(48.675f, 0.006f, 224.701f));
         QUICK_ADD_PLANET("Earth", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), OrbitingComponent(59.72f, 0.016f, 365.0f));
@@ -70,13 +71,16 @@ public:
     void OnUpdate(Bit::Timestep& ts) override
     {
         Bit::SpriteRenderer::BeginScene(m_Camera->Get());
-        Bit::SpriteRenderer::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(20.0f), m_Checkerboard, 20.0f, glm::vec4(1.0f, 1.0f, 1.0f, 0.2f));
+        Bit::SpriteRenderer::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f),glm::vec2(20.0f), m_Checkerboard, 20.0f, glm::vec4(1.0f, 1.0f, 1.0f, 0.2f));
         Bit::SpriteRenderer::EndScene();
         m_Scene.OnUpdate(ts);
     }
 
     void OnImGuiRender() override
     {
+        //bool show = true;
+        //ImGui::ShowDemoWindow(&show);
+
         static std::string active = "Earth";
 
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -85,9 +89,10 @@ public:
 
         ImGui::Begin("Settings", NULL, 
             ImGuiWindowFlags_MenuBar  
-            | ImGuiWindowFlags_NoScrollbar
             | ImGuiWindowFlags_NoCollapse
+            | ImGuiWindowFlags_NoTitleBar
         );
+        
         ImGui::BeginMenuBar();
         if (ImGui::BeginMenu(" > Select Planet"))
         {
@@ -114,6 +119,7 @@ public:
         {
             m_Planets[m_NameToIndex[active]].GetComponent<Bit::PrimitiveComponent>().IsVisible = true;
             auto& planet = m_Planets[m_NameToIndex[active]];
+
             auto& orbiting = planet.GetComponent<OrbitingComponent>();
             ImGui::PushID(active.c_str());
             ImGui::Text("%s", active.c_str());

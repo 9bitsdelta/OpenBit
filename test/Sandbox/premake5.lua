@@ -20,10 +20,7 @@ project "Sandbox"
     }
     
     links {
-        "OpenBit",
-        "GLAD",
-        "GLFW",
-        "ImGui"
+        "OpenBit"
     }
 
     defines {
@@ -53,7 +50,10 @@ project "Sandbox"
             "X11",
             "pthread",
             "dl",
-            "GL"
+            "GL",
+            "GLAD",
+            "GLFW",
+            "ImGui"
         }
 
     filter "configurations:Debug*"

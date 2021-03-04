@@ -10,7 +10,7 @@
 
 #include "Graphics/API/GraphicsAPI.h"
 
-#include "ECS/ScriptableEntity.h"
+#include "Scripting/ScriptableEntity.h"
 
 namespace Bit {
 
@@ -44,8 +44,6 @@ namespace Bit {
                  * glm::toMat4(glm::quat(Rotation))
                  * glm::scale(glm::mat4(1.0f), Scale);
         }
-
-
 
     };
 
@@ -92,6 +90,15 @@ namespace Bit {
             InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
             DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
         }
+    };
+
+    struct ScriptComponent
+    {
+        ScriptableEntity* Instance = nullptr;
+
+        ScriptableEntity* (*InstantiateScript)();
+        void (*DestroyScript)(ScriptComponent*);
+
     };
 
 }

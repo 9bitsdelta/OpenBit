@@ -172,8 +172,8 @@ namespace Bit {
         s_Data.TextureSlots[0] = s_Data.WhiteTexture;
     
         s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-        s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-        s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
+        s_Data.QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+        s_Data.QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
         s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
     }
     
@@ -190,9 +190,12 @@ namespace Bit {
         
         glEnable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_ALPHA_TEST);
+
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDepthFunc(GL_LEQUAL);
-        
+        glDepthFunc(GL_LESS);
+        glAlphaFunc(GL_GREATER, 0.0f);
+
         StartBatch();
     }
     
@@ -202,6 +205,7 @@ namespace Bit {
 
         glDisable(GL_BLEND);
         glDisable(GL_DEPTH_TEST);
+        glDisable(GL_ALPHA_TEST);
     }
     
     void SpriteRenderer::StartBatch()

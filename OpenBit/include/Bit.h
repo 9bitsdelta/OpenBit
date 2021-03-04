@@ -14,6 +14,8 @@
 #include "Core/KeyCodes.h"
 #include "Core/MouseCodes.h"
 
+#include "Core/EntryPoint.h"
+
 //GRAPHICS
 #include "Graphics/API/GraphicsAPI.h"
 #include "Graphics/Camera.h"
@@ -26,13 +28,10 @@
 #include "ECS/Entity.h"
 #include "ECS/Components.h"
 
+//SCRIPTING
+#include "Scripting/Lua.h"
+
 //External
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <imgui.h>
-
-/*
- * ENTRY POINT
- */
-
-#include "Core/EntryPoint.h"

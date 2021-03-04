@@ -1,6 +1,6 @@
 #include "bitpch.h"
 #include "Graphics/API/Texture.h"
-#include "Graphics/API/stb_image.h"
+#include "stb_image.h"
 
 #include "glad/glad.h"
 

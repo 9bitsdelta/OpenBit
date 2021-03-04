@@ -20,10 +20,7 @@ project "Kepler"
     }
     
     links {
-        "OpenBit",
-        "ImGui",
-        "GLAD",
-        "GLFW"
+        "OpenBit"
     }
 
     defines {
@@ -53,7 +50,10 @@ project "Kepler"
             "X11",
             "pthread",
             "dl",
-            "GL"
+            "GL",
+            "ImGui",
+            "GLAD",
+            "GLFW"
         }
 
     filter "configurations:Debug*"

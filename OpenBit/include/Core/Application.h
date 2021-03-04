@@ -19,6 +19,7 @@ namespace Bit {
 
         Window& GetWindow() { return *m_Window; }
         static Application& Get() { return *s_Instance; }
+        ImGuiSys& GetImGui() { return m_ImGui; }
 
         virtual void OnEvent(Event& event) {}
         virtual void OnUpdate(Timestep& ts) {}

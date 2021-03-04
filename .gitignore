@@ -12,3 +12,4 @@
 **/Makefile
 **.log
 /OpenBit/vendor/**
+!OpenBit/vendor/premake5.lua

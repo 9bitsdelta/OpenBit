@@ -11,23 +11,29 @@
         
         m_Scene.SetCamera(m_Camera);
 
-        m_Link1 = m_Scene.CreateEntity("link");
+        m_Link1 = m_Scene.CreateEntity("link1");
         auto& transform = m_Link1.GetComponent<Bit::TransformComponent>();
         transform.Scale    = { (float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f };
-        transform.Position = { 0.0f, 0.0f, -2.0f };
+        transform.Position = { 0.0f, 0.0f, -21.0f };
         m_Link1.AddComponent<Bit::SpriteComponent>(texture2);
 
         m_Link2 = m_Scene.CreateEntity("link2");
         auto& transform2 = m_Link2.GetComponent<Bit::TransformComponent>();
         transform2.Scale    = { (float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f };
-        transform2.Position = { 7.0f, 0.0f, -9.0f };
+        transform2.Position = { 18.0f, 0.0f, -20.0f };
         m_Link2.AddComponent<Bit::SpriteComponent>(texture);
 
         m_Link3 = m_Scene.CreateEntity("link3");
         auto& transform3 = m_Link3.GetComponent<Bit::TransformComponent>();
         transform3.Scale    = { (float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f };
-        transform3.Position = { 18.0f, 0.0f, -1.0f };
+        transform3.Position = { 7.0f, 0.0f, -23.0f };
         m_Link3.AddComponent<Bit::SpriteComponent>(texture);
+
+        auto m_Link4 = m_Scene.CreateEntity("link4");
+        auto& transform4 = m_Link4.GetComponent<Bit::TransformComponent>();
+        transform4.Scale = { (float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f };
+        transform4.Position = { 0.0f, 0.0f, -25.0f };
+        m_Link4.AddComponent<Bit::SpriteComponent>(texture2);
 
     }
 

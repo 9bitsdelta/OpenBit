@@ -24,16 +24,15 @@ namespace Bit {
         void OnUpdate(Timestep& ts); //TODO: RENDERING WITH MULTIPLE PIPELINES!!!!!!!
 
         void SetCamera(Ref<Camera> camera) { m_Camera = camera; }
-        void SetParallax(bool val) { m_Parallax = val; }
-
-        bool IsParallax() const { return m_Parallax; }
     
+        void OnStartRuntime();
+        void OnEndRuntime();
+        void OnUpdateRuntime();
+
     private:
         entt::registry m_Registry;
 
         Ref<Camera> m_Camera;
-
-        bool m_Parallax = true;
 
         friend class Entity;
     };

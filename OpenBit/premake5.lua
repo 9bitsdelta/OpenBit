@@ -22,12 +22,21 @@ project "OpenBit"
         "%{Includes.entt}",
         "%{Includes.glad}",
         "%{Includes.glfw}",
-        "%{Includes.imgui}"
+        "%{Includes.imgui}",
+        "%{Includes.lua}",
+        "%{Includes.stbi}"
     }
     
     defines {
         "_CRT_SECURE_NO_WARNINGS",
         "GLFW_INCLUDE_NONE"
+    }
+
+    links {
+        "ImGui",
+        "GLAD",
+        "GLFW",
+        "lua"
     }
 
     filter "system:windows"
@@ -54,8 +63,6 @@ project "OpenBit"
             "pthread",
             "dl",
             "GL",
-            "GLAD",
-            "GLFW"
         }
         
     filter "configurations:Debug*"

@@ -66,12 +66,6 @@ namespace Bit {
 
             auto group = m_Registry.group<SpriteComponent>(entt::get<TransformComponent>);
 
-            group.sort<TransformComponent>([camera](const auto& lhs, const auto& rhs) {
-                float leftLength = glm::dot(lhs.Position - camera->GetPosition(), camera->GetForwardDirection());
-                float rightLength = glm::dot(rhs.Position - camera->GetPosition(), camera->GetForwardDirection());
-                return leftLength > rightLength; //TODO: FIX THIS
-            });
-
             group.each([](auto entity, auto& sprite, auto& transform) 
                 {
                     if (sprite.Texture == nullptr) SpriteRenderer::DrawQuad(transform.GetTransform(), sprite.Color);
