@@ -40,16 +40,16 @@ namespace Bit {
         float time = m_Window->GetTime();
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
-        
+
         GraphicsAPI::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
         GraphicsAPI::Clear();
-        
+
         OnUpdate(timestep);
 
         m_ImGui.Begin();
         OnImGuiRender();
         m_ImGui.End();
-        
+
         m_Window->OnUpdate();
     }
 
@@ -62,7 +62,7 @@ namespace Bit {
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
         GraphicsAPI::SetViewport(0, 0, event.GetWidth(), event.GetHeight());
-        
+
         return true;
     }
 
@@ -73,7 +73,7 @@ namespace Bit {
         dispatcher.Dispatch<WindowResizeEvent>(BIT_BIND_EVENT_FN(Application::OnWindowResize));
 
         m_ImGui.OnEvent(event);
-        
+
         OnEvent(event);
     }
 

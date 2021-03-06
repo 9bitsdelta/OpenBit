@@ -27,7 +27,7 @@ public:
     {
         auto& transform = GetComponent<Bit::TransformComponent>();
         auto& orbiting = GetComponent<OrbitingComponent>();
-        
+
         orbiting.SemiMinor = glm::sqrt(orbiting.SemiMajor * orbiting.SemiMajor * (1 - orbiting.Ecc * orbiting.Ecc));
         transform.Scale = glm::vec3(0.05f);
     }
@@ -36,7 +36,7 @@ public:
     {
         auto& orbiting = GetComponent<OrbitingComponent>();
         auto& transform = GetComponent<Bit::TransformComponent>();
-        
+
         orbiting.Degrees += (120.0f * ts); //TO BE CHANGED
         orbiting.Degrees = (orbiting.Degrees > 360.0f) ? (orbiting.Degrees - 360.0f) : orbiting.Degrees;
 

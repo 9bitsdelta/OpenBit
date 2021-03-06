@@ -3,7 +3,7 @@ project "OpenBit"
     language "C++"
     cppdialect "C++17"
     staticruntime "on"
-    
+
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}" )
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -14,7 +14,7 @@ project "OpenBit"
         "source/**",
         "include/**"
     }
-    
+
     includedirs {
         "include",
         "%{Includes.spdlog}",
@@ -24,9 +24,10 @@ project "OpenBit"
         "%{Includes.glfw}",
         "%{Includes.imgui}",
         "%{Includes.lua}",
+        "%{Includes.sol}",
         "%{Includes.stbi}"
     }
-    
+
     defines {
         "_CRT_SECURE_NO_WARNINGS",
         "GLFW_INCLUDE_NONE"
@@ -41,15 +42,15 @@ project "OpenBit"
 
     filter "system:windows"
         systemversion "latest"
-        
+
         defines {
             "BIT_PLATFORM_WINDOWS"
         }
-        
+
         links {
             "opengl32.lib"
         }
-        
+
     filter "system:linux"
         systemversion "latest"
         toolset("gcc")
@@ -57,20 +58,21 @@ project "OpenBit"
         defines {
             "BIT_PLATFORM_LINUX"
         }
-        
+
         links {
             "X11",
             "pthread",
             "dl",
             "GL",
         }
-        
+
     filter "configurations:Debug*"
         defines "BIT_DEBUG"
         runtime "Debug"
         symbols "on"
-    
+
     filter "configurations:Release*"
         defines "BIT_RELEASE"
         runtime "Release"
         optimize "on"
+        symbols "on"

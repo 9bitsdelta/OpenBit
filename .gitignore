@@ -1,15 +1,17 @@
 # Directories
 .*/
-!.vscode/
 **/bin/
 **/bin-int/
 
 # Files
+.nvimrc
+compile_commands.json
 **.sln
 **.vcxproj
 **.vcxproj.filters
 **.vcxproj.user
 **/Makefile
+**/imgui.ini
 **.log
 /OpenBit/vendor/**
 !OpenBit/vendor/premake5.lua

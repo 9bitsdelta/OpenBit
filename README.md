@@ -1,26 +1,28 @@
 # OpenBit
-Engine for random programs, heavily inspired by [TheCherno/Hazel](http://github.com/TheCherno/Hazel)<br>
-Currently unavailable for hardware that does not support OpenGL 4.5.
+Engine for random programs, heavily inspired by [TheCherno/Hazel](http://github.com/TheCherno/Hazel).
 
-## Primary Goal:
-Create an engine capable of (semi-accurate) scientific simulations.
+Currently unavailable for Mac or for hardware that does not support OpenGL 4.5.
 
-### Primary-Goal Features:
-2D Renderers<br>
-Scripting<br>
-Entity-Component-System<br>
+### Primary Goal:
+Create an engine capable of creating scientific simulation software.
 
-## Secondary Goal:
-Make a game engine.<br>
-
-### Features:
-_Let's not go down that road **yet**_
+### Secondary Goal:
+Make a game engine.
 
 ## Compiling on Linux
-Unzip the archive. If you have Visual Studio Code, there are scripts already made for it to create the makefiles, build and debug. Else, there are bash scripts which set up the makefiles.<br>
+Unzip the `dependencies.zip` archive. There are bash scripts which set up the makefiles.
 
 	bash scripts/genproj-linux.sh
 	make
 
-## Compiing on Windows
-Unzip the archive. Run the script `scripts/genproj-windows.bat` which will create visual studio 2019 project files.
+Possible configurations for `make` are `debug` (default) and `release`.
+
+The built binaries will be found at `bin/linux-x86_64-{configuration}/{projectname}/`.
+Some of the example projects included might load external files at runtime, these can be found in their respective
+project directory, under `assets/`. You can either copy this folder to the same directory as the binary or set the
+working directory to the project directory.
+
+## Compiling on Windows
+Unzip the `dependencies.zip` archive. Run the script `scripts/genproj-windows.bat` which will create
+visual studio 2019 project files. You can then open `OpenBit.sln` and run the build from there,
+either in `debug` or `release` configurations.

@@ -22,6 +22,7 @@ Includes["glad"]    = vendor .. "/GLAD/include"
 Includes["glfw"]    = vendor .. "/GLFW/include"
 Includes["imgui"]   = vendor .. "/ImGui"
 Includes["lua"]     = vendor .. "/lua/src"
+Includes["sol"]     = vendor .. "/sol/"
 Includes["stbi"]    = vendor .. "/stb_image"
 
 group "Dependencies"
@@ -29,7 +30,7 @@ group "Dependencies"
     include "OpenBit/vendor"
 
 group ""
-    
+
 include "test/Kepler"
 include "test/Sandbox"
 include "OpenBit"

@@ -50,9 +50,9 @@ namespace Bit {
     #endif
 
         BIT_CORE_INFO("OpenGL Info:");
-        BIT_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
-        BIT_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
-        BIT_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
+        BIT_CORE_INFO("  Vendor: {}", glGetString(GL_VENDOR));
+        BIT_CORE_INFO("  Renderer: {}", glGetString(GL_RENDERER));
+        BIT_CORE_INFO("  Version: {}", glGetString(GL_VERSION));
 
     }
 

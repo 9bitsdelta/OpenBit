@@ -1,10 +1,8 @@
 #include <Bit.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "Test.h"
-#include "Oscillator.h"
+
+#include <sol.hpp>
 
 class Sandbox : public Bit::Application
 {
@@ -12,41 +10,72 @@ public:
     Sandbox()
     {
         m_Camera->SetPerspectiveProjection(glm::radians(45.0f), m_AspectRatio, 1.0f, 100.0f);
-
         testLayer.Init(m_Camera);
-        osc.Init();
+
+        // LUA INIT
+
+        const std::string script = R"(
+            x = 42
+
+            print('Hello Script!')
+
+            function OnUpdate()
+                return "Hello Lua!"
+            end
+
+        )";
+
+        m_Lua.open_libraries(sol::lib::base);
+
+        m_Lua.script(script.data());
+
+
+        int x = m_Lua["x"];
+        std::function<const char*()> onUpdateFunc = m_Lua["OnUpdate"];
+        BIT_WARN("Retrieved x = {}", x);
+        BIT_WARN("Retrieved output of OnUpdate(): {}", onUpdateFunc() );
     }
 
     ~Sandbox()
     {
         testLayer.Shutdown();
-        osc.Shutdown();
     }
 
     void OnUpdate(Bit::Timestep& ts)
     {
         glm::vec3 translation = m_Camera->GetPosition();
         float yaw = m_Camera->GetYaw();
-        if (Bit::Input::IsKeyPressed(Bit::Key::Space))     translation.y += m_Speed * ts;
-        if (Bit::Input::IsKeyPressed(Bit::Key::LeftShift)) translation.y -= m_Speed * ts;
-        if (Bit::Input::IsKeyPressed(Bit::Key::A))         translation -= m_Speed * ts * m_Camera->GetRightDirection();
-        if (Bit::Input::IsKeyPressed(Bit::Key::D))         translation += m_Speed * ts * m_Camera->GetRightDirection();
-        if (Bit::Input::IsKeyPressed(Bit::Key::W))         translation += m_Speed * ts * m_Camera->GetForwardDirection();
-        if (Bit::Input::IsKeyPressed(Bit::Key::S))         translation -= m_Speed * ts * m_Camera->GetForwardDirection();
-        if (Bit::Input::IsKeyPressed(Bit::Key::Q))         yaw -= 1.5f * ts;
-        if (Bit::Input::IsKeyPressed(Bit::Key::E))         yaw += 1.5f * ts;
+
+        if (Bit::Input::IsKeyPressed(Bit::Key::Space))
+            translation.y += m_Speed * ts;
+        if (Bit::Input::IsKeyPressed(Bit::Key::LeftShift))
+            translation.y -= m_Speed * ts;
+        if (Bit::Input::IsKeyPressed(Bit::Key::A))
+            translation -= m_Speed * ts * m_Camera->GetRightDirection();
+        if (Bit::Input::IsKeyPressed(Bit::Key::D))
+            translation += m_Speed * ts * m_Camera->GetRightDirection();
+        if (Bit::Input::IsKeyPressed(Bit::Key::W))
+            translation += m_Speed * ts * m_Camera->GetForwardDirection();
+        if (Bit::Input::IsKeyPressed(Bit::Key::S))
+            translation -= m_Speed * ts * m_Camera->GetForwardDirection();
+        if (Bit::Input::IsKeyPressed(Bit::Key::Q))
+            yaw -= 1.5f * ts;
+        if (Bit::Input::IsKeyPressed(Bit::Key::E))
+            yaw += 1.5f * ts;
+
         m_Camera->SetPosition(translation);
         m_Camera->SetRotation(0.0f, yaw, 0.0f);
 
         testLayer.OnUpdate(ts);
-        osc.OnUpdate(ts);
+
+        // LUA UPDATE
+
     }
 
     void OnEvent(Bit::Event& event)
     {
         //Other Events
         testLayer.OnEvent(event);
-        osc.OnEvent(event);
 
         //Sandbox events
         Bit::EventDispatcher dispatcher(event);
@@ -58,8 +87,7 @@ public:
     {
         m_AspectRatio = (float)event.GetWidth()/(float)event.GetHeight();
         m_Camera->SetPerspectiveProjection(glm::radians(45.0f), m_AspectRatio, 1.0f, 100.0f);
-        //m_Camera.SetOrthographicProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-        
+
         return true;
     }
 
@@ -67,15 +95,14 @@ public:
     {
         m_ZoomLevel -= event.GetYOffset() * 1.5f;
         m_ZoomLevel = std::max(m_ZoomLevel, 1.25f);
-        //m_Camera.SetPerspectiveProjection(glm::radians(45.0f), m_AspectRatio, 1.0f, 100.0f);
-        //m_Camera.SetOrthographicProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
         return true;
     }
 
 private:
-    Oscillator osc;
     TestLayer testLayer;
+
+    sol::state m_Lua;
 
     Bit::Timestep m_Ts;
     Bit::Ref<Bit::Camera> m_Camera = Bit::Camera::Create(Bit::Projection::Perspective);

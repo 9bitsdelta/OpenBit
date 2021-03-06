@@ -3,22 +3,24 @@ project "Sandbox"
     language "C++"
     cppdialect "C++17"
     staticruntime "on"
-    
+
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}/")
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}/")
-    
+
     files {
         "source/**"
     }
-    
+
     includedirs {
         "%{wks.location}/OpenBit/include",
         "%{Includes.spdlog}",
         "%{Includes.glm}",
         "%{Includes.imgui}",
-        "%{Includes.entt}"
+        "%{Includes.entt}",
+        "%{Includes.sol}",
+        "%{Includes.lua}"
     }
-    
+
     links {
         "OpenBit"
     }
@@ -26,7 +28,7 @@ project "Sandbox"
     defines {
         "GLFW_INCLUDE_NONE"
     }
-    
+
     filter "system:windows"
         systemversion "latest"
 
@@ -41,11 +43,11 @@ project "Sandbox"
     filter "system:linux"
         systemversion "latest"
         toolset ("gcc")
-    
+
         defines {
             "BIT_PLATFORM_LINUX"
         }
-    
+
         links {
             "X11",
             "pthread",
@@ -53,16 +55,17 @@ project "Sandbox"
             "GL",
             "GLAD",
             "GLFW",
-            "ImGui"
+            "ImGui",
+            "lua"
         }
 
     filter "configurations:Debug*"
         defines "BIT_DEBUG"
         runtime "Debug"
         symbols "on"
-    
+
     filter "configurations:Release*"
         defines "BIT_RELEASE"
         runtime "Release"
         optimize "on"
-    
+        symbols "on"
